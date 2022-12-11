@@ -43,7 +43,7 @@ for op in ops:
             prev_knot = rope[i-1]
             knot = rope[i]
             # If true, previous knot is still in adjacent points 
-            if ((prev_knot.real - knot.real)**2 + (prev_knot.imag - knot.imag)**2)**0.5 <= ROOT_2:
+            if abs(prev_knot-knot) <= ROOT_2:
                 continue
                 
             # If not in adjacent points, move knot
