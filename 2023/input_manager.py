@@ -16,4 +16,4 @@ def get_input(full_path: str, lines=True):
     with open(
         join(dirname(full_path), "inputs", basename(full_path).split(".")[0] + ".txt")
     ) as f:
-        return f.readlines() if lines else f.read()
+        return [line.strip() for line in f.readlines()] if lines else f.read()
