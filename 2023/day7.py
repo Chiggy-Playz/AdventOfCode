@@ -2,41 +2,58 @@ from input_manager import get_input
 from collections import defaultdict
 
 input = get_input(__file__)
-part1 = True
+part1 = False
 
 bids = {line.split(" ")[0]: int(line.split(" ")[1]) for line in input}
 # 0-6, representing high card to five of a kind respectively.
 hand_types: dict[int, list[str]] = defaultdict(list)
 
 
-# Process type of hand
-for hand in bids.keys():
+def process_cards(hand: str) -> int:
     cards: dict[str, int] = defaultdict(int)
     for card in hand:
         cards[card] += 1
+
+    # If cards contain a joker, find card with most occurrences
+    # Replace joker with that card, then calculate type again
+    if (not part1) and "J" in cards:
+        jokers = cards.pop("J")
+        if jokers == 5:
+            # All cards are jokers so card type if five of a kind
+            return 6
+        common_card = max(cards, key=cards.get)  # type: ignore
+        cards[common_card] += jokers
+        return process_cards("".join([key * value for key, value in cards.items()]))
+
     # Five of a kind
     if len(cards) == 1:
-        hand_types[6].append(hand)
+        return 6
     elif len(cards) == 2:
         if 4 in cards.values():
-            hand_types[5].append(hand)
+            return 5
         else:
-            hand_types[4].append(hand)
+            return 4
     elif len(cards) == 3:
         if 3 in cards.values():
-            hand_types[3].append(hand)
+            return 3
         else:
-            hand_types[2].append(hand)
+            return 2
     elif len(cards) == 4:
-        hand_types[1].append(hand)
+        return 1
     else:
-        hand_types[0].append(hand)
+        return 0
+    return 0
+
+
+# Process type of hand
+for hand in bids.keys():
+    hand_types[process_cards(hand)].append(hand)
 
 card_map = {
     "A": 14,  # Cursed
     "K": 13,
     "Q": 12,
-    "J": 11 if part1 else 1, 
+    "J": 11 if part1 else 1,
     "T": 10,
     **{str(num): num for num in range(2, 10)},
 }
@@ -51,7 +68,7 @@ def compare_cards(hand1: str, hand2: str) -> bool:
         if card_map[card1] == card_map[card2]:
             continue
         return card_map[card1] > card_map[card2]
-    raise Exception()
+    raise NotImplementedError()
 
 
 ordered = []
