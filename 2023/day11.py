@@ -16,20 +16,27 @@ for i in range(row_length):
     if len(set(arr[:, i])) == 1:
         empty_cols.append(i)
 
-delta = 0
-for empty_row in empty_rows:
-    arr = np.insert(arr, empty_row + delta, np.array(list("." * row_length)), 0)
-    col_length += 1
-    delta += 1
+def solution(k):
+    global arr
 
-delta = 0
-for empty_col in empty_cols:
-    arr = np.insert(arr, empty_col + delta, np.array(list("." * col_length)), 1)
-    delta += 1
+    galaxies = list(zip(np.argwhere(arr == "#").T[1], np.argwhere(arr == "#").T[0]))
+    s = 0
+    for (x1, y1), (x2, y2) in itertools.combinations(galaxies, 2):
+        dx = 0
+        min_x = min(x1, x2)
+        max_x = max(x1, x2)
+        for col in empty_cols:
+            if min_x < col < max_x:
+                dx += k
+        dy = 0
+        min_y = min(y1, y2)
+        max_y = max(y1, y2)
+        for row in empty_rows:
+            if min_y < row < max_y:
+                dy += k
+        s += abs(max_x - min_x) + dx + abs(max_y - min_y) + dy 
 
-galaxies = list(zip(np.argwhere(arr == "#").T[1], np.argwhere(arr == "#").T[0]))
-# distances = defaultdict(lambda: float('inf'))
-s = 0
-for ((x1, y1), (x2, y2)) in itertools.combinations(galaxies, 2):
-    s += abs(x2-x1) + abs(y2 - y1)
-print(s)
+    return s
+
+print(solution(1))
+print(solution(1000000-1))
