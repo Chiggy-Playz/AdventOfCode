@@ -2,7 +2,7 @@ from input_manager import get_input
 import re
 from itertools import combinations
 from time import monotonic
-from functools import lru_cache
+from functools import lru_cache, cache
 
 input = get_input(__file__)
 part1 = False
@@ -60,7 +60,7 @@ def check_spring(spring: str, groups: tuple[int]) -> int:
         return len(groups) == 0
 
     if len(groups) == 0:
-        return 1
+        return not ("#" in spring)
 
     char = spring[0]
     group = groups[0]
@@ -68,9 +68,9 @@ def check_spring(spring: str, groups: tuple[int]) -> int:
         case ".":
             return check_spring(spring[1:], groups)
         case "?":
-            return check_spring("." + spring[1:], groups) + check_spring(
-                "#" + spring[1:], groups
-            )
+            period = check_spring("." + spring[1:], groups)
+            hash = check_spring("#" + spring[1:], groups)
+            return period + hash
         case "#":
             # Check if a group matches
             count = 1
@@ -134,13 +134,12 @@ def solution(part1: bool):
         )
 
         if not part1:
-            springs = "?".join(springs * 5)
+            springs = "?".join([springs] * 5)
             nums = nums * 5
-        
         s += int(check_spring(springs, nums))
     return s
 
-
 start = monotonic()
 print(solution(True))
+print(solution(False))
 print(f"{(monotonic() - start) * 1000:.0f}ms")
