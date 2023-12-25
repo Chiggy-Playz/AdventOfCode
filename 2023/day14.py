@@ -1,4 +1,5 @@
 from input_manager import get_input
+from time import monotonic
 
 def solution(part1: bool) -> int:
     input = get_input(__file__)
@@ -102,5 +103,7 @@ def solution(part1: bool) -> int:
 
     return s
 
+start = monotonic()
 print(solution(True))
 print(solution(False))
+print(monotonic() - start)
