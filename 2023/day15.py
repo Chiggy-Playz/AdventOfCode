@@ -1,4 +1,3 @@
-# Boilerplate
 from input_manager import get_input
 from collections import defaultdict
 
@@ -53,8 +52,6 @@ def part2():
             s += temp
 
     return s
-
-
 
 print(part1())
 print(part2())
