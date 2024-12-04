@@ -1,7 +1,9 @@
-from input_manager import get_input
+from common.input_manager import get_input
+from time import monotonic
 
 input = get_input(__file__)
 
+start = monotonic()
 m = 0
 for row in range(len(input)):
     for col in range(len(input[0])):
@@ -138,5 +140,5 @@ for row in range(len(input)):
                             x, y = new_x, new_y
 
         m = max(m, len(energized))
-
 print(m)
+print(monotonic() - start)

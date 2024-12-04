@@ -1,4 +1,4 @@
-from input_manager import get_input
+from common.input_manager import get_input
 import re
 from itertools import combinations
 from time import monotonic

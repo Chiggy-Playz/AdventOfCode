@@ -1,4 +1,4 @@
-from input_manager import get_input
+from common.input_manager import get_input
 
 input = get_input(__file__)
 

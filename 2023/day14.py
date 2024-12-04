@@ -1,4 +1,4 @@
-from input_manager import get_input
+from common.input_manager import get_input
 from time import monotonic
 
 def solution(part1: bool) -> int:

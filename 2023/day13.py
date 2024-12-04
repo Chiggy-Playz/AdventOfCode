@@ -1,4 +1,4 @@
-from input_manager import get_input
+from common.input_manager import get_input
 import numpy as np
 
 input = get_input(__file__, lines=False)
