@@ -11,8 +11,7 @@ def part2(lines: list[str]):
 
 
 if __name__ == "__main__":
-
-    lines = get_input()
+    lines = get_input(testing=True)
     with timeit("Part 1"):
         print(part1(lines))
 
