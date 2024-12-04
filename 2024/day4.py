@@ -30,7 +30,6 @@ for i, row in enumerate(lines):
                 # Add dirn again
                 dy, dx = map(sum, zip((dy, dx), dir))
 
-
 print(part1)
 
 part2 = 0
