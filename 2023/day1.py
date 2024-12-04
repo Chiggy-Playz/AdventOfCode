@@ -1,4 +1,4 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 
 input = get_input(__file__)
 
@@ -59,7 +59,7 @@ def part2():
                 num += int(char)
                 break
             for key, value in num_map.items():
-                if line[:i+1].endswith(key):
+                if line[: i + 1].endswith(key):
                     num += value
                     break
             else:

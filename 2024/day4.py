@@ -1,4 +1,4 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 
 lines = get_input(__file__)
 

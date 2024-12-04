@@ -1,4 +1,4 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 from collections import defaultdict
 
 input = get_input(__file__)

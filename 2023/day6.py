@@ -1,12 +1,9 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 import re
 
 input = get_input(__file__)
 part1 = True
-time, distance = (
-    [int(num) for num in re.findall(r"\d+", line.replace(" ", " " if part1 else ""))]
-    for line in input
-)
+time, distance = ([int(num) for num in re.findall(r"\d+", line.replace(" ", " " if part1 else ""))] for line in input)
 
 prod = 1
 for race_time, race_distance in zip(time, distance):

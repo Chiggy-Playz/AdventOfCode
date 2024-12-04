@@ -1,5 +1,6 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 from time import monotonic
+
 
 def solution(part1: bool) -> int:
     input = get_input(__file__)
@@ -11,7 +12,7 @@ def solution(part1: bool) -> int:
     seen = []
 
     for cycle in range(cycles):
-        for dir in ("NWSE"):
+        for dir in "NWSE":
 
             if dir in "NS":
                 outers = cols
@@ -43,11 +44,7 @@ def solution(part1: bool) -> int:
 
                     i = 1
                     while 0 <= (axis + (sign * i)) <= limit:
-                        above = (
-                            dish[row + (sign * i)][col]
-                            if dir in "NS"
-                            else dish[row][col + (sign * i)]
-                        )
+                        above = dish[row + (sign * i)][col] if dir in "NS" else dish[row][col + (sign * i)]
 
                         # If above is # or O, then we cant move up
                         if above in "#O":
@@ -71,7 +68,7 @@ def solution(part1: bool) -> int:
                                 dish[row][col + (sign * i)],
                             )
                         i += 1
-            
+
             # Reverse the array
             if dir == "S":
                 dish = dish[::-1]
@@ -80,7 +77,7 @@ def solution(part1: bool) -> int:
 
             if part1:
                 break
-    
+
         stringDish = "\n".join("".join(l) for l in dish)
 
         if stringDish in seen:
@@ -100,8 +97,8 @@ def solution(part1: bool) -> int:
                 continue
             s += rows - row
 
-
     return s
+
 
 start = monotonic()
 print(solution(True))

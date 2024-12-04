@@ -1,4 +1,4 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 import re
 from collections import defaultdict
 from typing import Generator
@@ -13,9 +13,7 @@ categories: dict[str, list[list[int]]] = {}
 for raw_category in raw_categories:
     raw_category_name, *category_ranges = raw_category.split("\n")
     category_name = raw_category_name.split(" ")[0]
-    categories[category_name] = [
-        [int(num) for num in re.findall(r"\d+", line)] for line in category_ranges
-    ]
+    categories[category_name] = [[int(num) for num in re.findall(r"\d+", line)] for line in category_ranges]
 
 
 def part1():
@@ -30,9 +28,7 @@ def part1():
                 ):
                     continue
 
-                previous_category_destination = (
-                    dest_start - source_start + previous_category_destination
-                )
+                previous_category_destination = dest_start - source_start + previous_category_destination
                 break
         seed_to_location[seed] = previous_category_destination
 
@@ -64,22 +60,22 @@ def part2():
             start_matched, end_matched = False, False
             old = previous_range
             for source_start, source_end, dest_start, dest_end in category_ranges:
-                if (not start_matched) and (
-                    source_start <= previous_range[0] <= source_end
-                ):
+                if (not start_matched) and (source_start <= previous_range[0] <= source_end):
                     delta = previous_range[0] - source_start
                     previous_range = (
                         dest_start + delta,
                         previous_range[1],
                     )
                     start_matched = True
-                if (not end_matched) and (
-                    source_start <= previous_range[1] <= source_end
-                ):
+                if (not end_matched) and (source_start <= previous_range[1] <= source_end):
                     delta = previous_range[1] - source_start
                     previous_range = (
                         previous_range[0],
-                        dest_start + delta if ((source_start <= previous_range[0] <= source_end) or previous_range[0] > source_end) else dest_start,
+                        (
+                            dest_start + delta
+                            if ((source_start <= previous_range[0] <= source_end) or previous_range[0] > source_end)
+                            else dest_start
+                        ),
                     )
                     end_matched = True
 

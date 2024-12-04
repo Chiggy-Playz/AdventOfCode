@@ -1,5 +1,6 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 import math
+
 input = get_input(__file__)
 
 # Pipe: [ ends (x, y) ]
@@ -55,9 +56,7 @@ def part1() -> list[tuple[int, int]]:
                             continue
 
                         # Check  if the neighbour pipe actually connects
-                        if (cx, cy) not in [
-                            (new_x + dx, new_y + dy) for dx, dy in pipe_ends[next_pipe]
-                        ]:
+                        if (cx, cy) not in [(new_x + dx, new_y + dy) for dx, dy in pipe_ends[next_pipe]]:
                             next_pipe = None
                             continue
 
@@ -91,19 +90,19 @@ def part2(loop: list[tuple[int, int]]):
 
     inside = 0
 
-    for y in range(int(min_y), max_y+1):
-        for x in range(int(min_x), max_x+1):
-            
-            if (x,y) in loop:
+    for y in range(int(min_y), max_y + 1):
+        for x in range(int(min_x), max_x + 1):
+
+            if (x, y) in loop:
                 continue
-            
+
             # Go towards the right edge
             interior = "|LJ"
             exterior = "|F7"
 
             in_count = 0
             ex_count = 0
-            for i in range(x+1, max_x+1):
+            for i in range(x + 1, max_x + 1):
                 if (i, y) not in loop:
                     continue
                 if input[y][i] in interior:
@@ -111,12 +110,10 @@ def part2(loop: list[tuple[int, int]]):
                 if input[y][i] in exterior:
                     ex_count += 1
 
-            inside += ( (in_count % 2) == 1 ) and ( (  ex_count % 2  ) == 1 )
+            inside += ((in_count % 2) == 1) and ((ex_count % 2) == 1)
     return inside
 
 
 loop = part1()
 print(math.ceil((len(loop) - 1) / 2))
 print(part2(loop))
-
-

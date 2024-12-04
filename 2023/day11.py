@@ -1,4 +1,4 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 import numpy as np
 import itertools
 from collections import defaultdict
@@ -15,6 +15,7 @@ empty_cols = []
 for i in range(row_length):
     if len(set(arr[:, i])) == 1:
         empty_cols.append(i)
+
 
 def solution(k):
     global arr
@@ -34,9 +35,10 @@ def solution(k):
         for row in empty_rows:
             if min_y < row < max_y:
                 dy += k
-        s += abs(max_x - min_x) + dx + abs(max_y - min_y) + dy 
+        s += abs(max_x - min_x) + dx + abs(max_y - min_y) + dy
 
     return s
 
+
 print(solution(1))
-print(solution(1000000-1))
+print(solution(1000000 - 1))

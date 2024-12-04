@@ -1,4 +1,4 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 from collections import defaultdict
 
 input = get_input(__file__)
@@ -38,6 +38,7 @@ def adj_list(point: tuple[int, int]):
         )
     return adj
 
+
 while len(queue) != 0:
     current_point: tuple[int, int] = min(queue, key=lambda x: distance_from_start[x])
     queue.remove(current_point)
@@ -48,7 +49,6 @@ while len(queue) != 0:
     for neighbour_point, neighbour_dist in adj:
         if neighbour_point not in queue:
             continue
-
 
         # Check if more than 4 blocks in straight line:
         previous_4_path: list[tuple[int, int]] = (prev[current_point] + [current_point])[-4:]

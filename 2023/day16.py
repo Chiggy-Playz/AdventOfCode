@@ -1,4 +1,4 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 from time import monotonic
 
 input = get_input(__file__)
@@ -8,12 +8,7 @@ m = 0
 for row in range(len(input)):
     for col in range(len(input[0])):
         # Only keep edge points
-        if not (
-            (row == 0)
-            or (col == 0)
-            or (row == (len(input) - 1))
-            or (col == (len(input[0]) - 1))
-        ):
+        if not ((row == 0) or (col == 0) or (row == (len(input) - 1)) or (col == (len(input[0]) - 1))):
             continue
 
         # List of tuples of tuples?, contains current position and direction
@@ -41,7 +36,7 @@ for row in range(len(input)):
             beams.append((starting_point, (dx2, dy2)))
         else:
             dx = 0 if col not in (0, len(input[0]) - 1) else (1 if col == 0 else -1)
-            dy = 0 if row not in (0, len(input)-1) else (1 if row == 0 else -1)
+            dy = 0 if row not in (0, len(input) - 1) else (1 if row == 0 else -1)
             beams.append((starting_point, (dx, dy)))
 
         energized: set[tuple[int, int]] = {starting_point}
@@ -60,12 +55,7 @@ for row in range(len(input)):
 
                 # Check if we run into a wall
                 # Stop if we do and move into the next
-                if (
-                    (new_x < 0)
-                    or (new_y < 0)
-                    or (new_x >= len(input[0]))
-                    or (new_y >= len(input))
-                ):
+                if (new_x < 0) or (new_y < 0) or (new_x >= len(input[0])) or (new_y >= len(input)):
                     break
 
                 energized.add((new_x, new_y))

@@ -1,4 +1,4 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 
 input = get_input(__file__)
 
@@ -15,7 +15,7 @@ l2.sort()
 part1 = 0
 
 for i, j in zip(l1, l2):
-    part1 += abs(i-j)
+    part1 += abs(i - j)
 
 print(part1)
 

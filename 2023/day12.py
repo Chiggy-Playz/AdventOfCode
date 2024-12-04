@@ -1,4 +1,4 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 import re
 from itertools import combinations
 from time import monotonic
@@ -11,9 +11,7 @@ part1 = False
 def bruteforce():
     s = 0
     for y, line in enumerate(input):
-        springs, nums = line.split()[0], list(
-            map(int, re.findall(r"\d+", line.split()[1]))
-        )
+        springs, nums = line.split()[0], list(map(int, re.findall(r"\d+", line.split()[1])))
 
         # This function will take approximately 2 years for part 2 on my system :)
         # if not part1:
@@ -108,14 +106,10 @@ def check_spring(spring: str, groups: tuple[int]) -> int:
             else:
                 if "?" in spring[:count]:
                     return check_spring(
-                        spring[: spring.find("?")]
-                        + "."
-                        + spring[spring.find("?") + 1 :],
+                        spring[: spring.find("?")] + "." + spring[spring.find("?") + 1 :],
                         groups,
                     ) + check_spring(
-                        spring[: spring.find("?")]
-                        + "#"
-                        + spring[spring.find("?") + 1 :],
+                        spring[: spring.find("?")] + "#" + spring[spring.find("?") + 1 :],
                         groups,
                     )
                 else:
@@ -129,15 +123,14 @@ def check_spring(spring: str, groups: tuple[int]) -> int:
 def solution(part1: bool):
     s = 0
     for y, line in enumerate(input):
-        springs, nums = line.split()[0], tuple(
-            map(int, re.findall(r"\d+", line.split()[1]))
-        )
+        springs, nums = line.split()[0], tuple(map(int, re.findall(r"\d+", line.split()[1])))
 
         if not part1:
             springs = "?".join([springs] * 5)
             nums = nums * 5
         s += int(check_spring(springs, nums))
     return s
+
 
 start = monotonic()
 print(solution(True))

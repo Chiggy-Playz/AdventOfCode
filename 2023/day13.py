@@ -1,4 +1,4 @@
-from common.input_manager import get_input
+from utils.input_manager import get_input
 import numpy as np
 
 input = get_input(__file__, lines=False)
@@ -116,7 +116,7 @@ def part2():
             s += col + 1
             reflection_found = True
             break
-        
+
         if reflection_found:
             continue
 
@@ -144,7 +144,7 @@ def part2():
                         # Reached top of the list
                         if j > row or ((row + 1 + j) == len(arr)):
                             break
-                        
+
                         continue
 
                     if matched != 0:
@@ -158,6 +158,7 @@ def part2():
             reflection_found = True
             break
     return s
+
 
 print(part1())
 print(part2())
