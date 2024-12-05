@@ -1,6 +1,6 @@
 from utils.input_manager import get_input
 from utils.timing import timeit
-
+from utils.stats import benchmark
 
 def part1(rules: dict[int, list[int]], updates: list[list[int]]):
     safe = 0
@@ -35,8 +35,7 @@ def part2(rules: dict[int, list[int]], updates: list[list[int]]):
     return incorrect
 
 
-def main():
-    lines = get_input(testing=False, lines=False)
+def main(lines: str):
     rules_raw, updates = lines.split("\n\n")
     rules: dict[int, list[int]] = {}
     for rule in rules_raw.splitlines():
@@ -52,4 +51,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    lines = get_input(testing=False, lines=False)
+    main(lines)
+    benchmark(main, lines)

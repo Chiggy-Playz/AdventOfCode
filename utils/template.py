@@ -1,10 +1,7 @@
-from typing import TypeVar
-
 from utils.input_manager import get_input
+from utils.stats import benchmark
 from utils.timing import timeit
-from timeit import timeit as benchmark
-
-InputType = TypeVar("InputType", str, list[str])
+from utils.types import InputType
 
 
 def part1(lines: InputType):
@@ -26,6 +23,4 @@ def main(lines: InputType):
 if __name__ == "__main__":
     lines = get_input(testing=True)
     main(lines)
-
-    # Benchmark:
-    # print(benchmark(lambda: main(lines)))
+    benchmark(main, lines)
