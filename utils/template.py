@@ -9,11 +9,14 @@ def part1(lines: list[str]):
 def part2(lines: list[str]):
     pass
 
-
-if __name__ == "__main__":
+def main():
     lines = get_input(testing=True)
     with timeit("Part 1"):
         print(part1(lines))
 
     with timeit("Part 2"):
         print(part2(lines))
+
+
+if __name__ == "__main__":
+    main()
