@@ -38,49 +38,46 @@ def part2(lines: InputType):
         if "^" in line:
             source = (line.index("^"), i)
     # x, y
-    # current = source
-    # dir = (0, -1)
-    # obstacles = set()
-    # while True:
-    #     dx, dy = map(sum, zip(current, dir))
+    current = source
+    dir = (0, -1)
+    path = set()
+    while True:
+        dx, dy = map(sum, zip(current, dir))
 
-    #     if not ((0 <= dx < len(lines)) and (0 <= dy < len(lines))):
-    #         break
+        if not ((0 <= dx < len(lines)) and (0 <= dy < len(lines))):
+            break
 
-    #     if lines[dy][dx] != "#":
-    #         obstacles.add((dx, dy))
-    #         current = dx, dy
-    #         continue
+        if lines[dy][dx] != "#":
+            path.add((dx, dy))
+            current = dx, dy
+            continue
 
-    #     # Found a block in front, turn.
-    #     dir = dirs[dir]
-        
-    # Bruteforce
+        # Found a block in front, turn.
+        dir = dirs[dir]
+
+    # Partial Bruteforce 🫠...
     p2 = 0
-    for y in range(len(lines)):
-        for x in range(len(lines)):
-            if lines[y][x] in "#^":
+    for x, y in path:
+        dir = (0, -1)
+        current = source
+        visited: dict[tuple[int, int], list[tuple[int, int]]] = {}
+        while True:
+            dx, dy = map(sum, zip(current, dir))
+
+            if not ((0 <= dx < len(lines)) and (0 <= dy < len(lines))):
+                break
+
+            if (dx, dy) != (x, y) and lines[dy][dx] != "#":
+                if current in visited:
+                    if dir in visited[current]:
+                        p2 += 1
+                        break
+                visited[current] = visited.get(current, []) + [dir]
+                current = (dx, dy)
                 continue
-            dir = (0, -1)
-            current = source
-            visited: dict[tuple[int, int], list[tuple[int, int]]] = {}
-            while True:
-                dx, dy = map(sum, zip(current, dir))
 
-                if not ((0 <= dx < len(lines)) and (0 <= dy < len(lines))):
-                    break
-
-                if (dx, dy) != (x, y) and lines[dy][dx] != "#":
-                    if current in visited:
-                        if dir in visited[current]:
-                            p2 += 1
-                            break
-                    visited[current] = visited.get(current, []) + [dir]
-                    current = (dx, dy)
-                    continue
-
-                # Found block
-                dir = dirs[dir]
+            # Found block
+            dir = dirs[dir]
 
     return p2
 
@@ -96,4 +93,4 @@ def main(lines: InputType):
 if __name__ == "__main__":
     lines = get_input(testing=False)
     main(lines)
-    benchmark(main, lines)
+    # benchmark(main, lines)
