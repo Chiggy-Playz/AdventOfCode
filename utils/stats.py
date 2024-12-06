@@ -19,7 +19,6 @@ def silent_main(main: Callable, lines: InputType):
 
 def benchmark(main: Callable, lines: InputType, number: int = 100):
 
-    # Benchmark the main function
     start_total = time.perf_counter()
 
     # Use timeit for precise measurement
