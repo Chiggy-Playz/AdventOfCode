@@ -94,4 +94,15 @@ def main(lines: InputType):
 if __name__ == "__main__":
     lines = get_input(testing=False)
     main(lines)
-    benchmark(main, lines)
+    # benchmark(main, lines)
+
+    """
+    850435817339
+    Part 1 took 60.99 ms
+    104824810233437
+    Part 2 took 1.79 s
+
+    --- Benchmarks ---
+    Number of runs: 100
+    Average per run: 1.84 s
+    """
