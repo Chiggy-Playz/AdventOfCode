@@ -10,34 +10,21 @@ def part1(lines: InputType):
         test_raw, nums = line.split(": ")
         test = int(test_raw)
         (*nums,) = map(int, nums.split())
-        found = False
 
-        def find(stack: list[int], nums: list[int]):
-            nonlocal found
-            if found:
-                return
+        def find(nums: list[int], val: int):
+            if len(nums) == 1:
+                return nums[-1] == val
 
-            if not nums:
-                if stack.pop() == test:
-                    values.append(test)
-                    found = True
-                return
+            if val % nums[-1] == 0 and find(nums[:-1], val // nums[-1]):
+                return True
 
-            if not stack:
-                stack.append(nums.pop(0))
+            if val - nums[-1] > 0 and find(nums[:-1], val - nums[-1]):
+                return True
 
-            if len(stack) < 2:
-                stack.append(nums.pop(0))
+            return False
 
-            # Stack has 2 things. Add and multiply
-            add = stack[0] + stack[1]
-            prod = stack[0] * stack[1]
-            if add <= test:
-                find([add, *stack[2:]], nums.copy())
-            if prod <= test:
-                find([prod, *stack[2:]], nums.copy())
-
-        find([], nums)
+        if find(nums, test):
+            values.append(test)
 
     return sum(values)
 
@@ -48,37 +35,28 @@ def part2(lines: InputType):
         test_raw, nums = line.split(": ")
         test = int(test_raw)
         (*nums,) = map(int, nums.split())
-        found = False
 
-        def find(stack: list[int], nums: list[int]):
-            nonlocal found
-            if found:
-                return
+        def find(nums: list[int], val: int):
+            if len(nums) == 1:
+                return nums[-1] == val
 
-            if not nums:
-                if stack.pop() == test:
-                    values.append(test)
-                    found = True
-                return
+            if val % nums[-1] == 0 and find(nums[:-1], val // nums[-1]):
+                return True
 
-            if not stack:
-                stack.append(nums.pop(0))
+            if val - nums[-1] > 0 and find(nums[:-1], val - nums[-1]):
+                return True
 
-            if len(stack) < 2:
-                stack.append(nums.pop(0))
+            if (
+                str(val).endswith(str(nums[-1]))
+                and (new_val := str(val)[: -len(str(nums[-1]))])
+                and find(nums[:-1], int(new_val))
+            ):
+                return True
 
-            # Stack has 2 things. Add and multiply and concat
-            add = stack[0] + stack[1]
-            prod = stack[0] * stack[1]
-            concat = int(f"{stack[0]}{stack[1]}")
-            if add <= test:
-                find([add, *stack[2:]], nums.copy())
-            if prod <= test:
-                find([prod, *stack[2:]], nums.copy())
-            if concat <= test:
-                find([concat, *stack[2:]], nums.copy())
+            return False
 
-        find([], nums)
+        if find(nums, test):
+            values.append(test)
 
     return sum(values)
 
@@ -94,15 +72,15 @@ def main(lines: InputType):
 if __name__ == "__main__":
     lines = get_input(testing=False)
     main(lines)
-    # benchmark(main, lines)
+    benchmark(main, lines)
 
     """
     850435817339
-    Part 1 took 60.99 ms
+    Part 1 took 3.18 ms
     104824810233437
-    Part 2 took 1.79 s
+    Part 2 took 6.08 ms
 
     --- Benchmarks ---
     Number of runs: 100
-    Average per run: 1.84 s
+    Average per run: 8.98 ms
     """
