@@ -93,4 +93,4 @@ def main(lines: InputType):
 if __name__ == "__main__":
     lines = get_input(testing=False)
     main(lines)
-    # benchmark(main, lines)
+    benchmark(main, lines)
