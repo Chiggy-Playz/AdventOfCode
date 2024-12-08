@@ -1,7 +1,10 @@
+from typing import TypeAlias
+
 from utils.input_manager import get_input
 from utils.stats import benchmark
 from utils.timing import timeit
-from utils.types import InputType
+
+InputType: TypeAlias = list[str]
 
 
 def part1(lines: InputType):
