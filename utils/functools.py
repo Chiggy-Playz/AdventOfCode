@@ -127,7 +127,7 @@ def traverse_grid(grid: Union[list[list[T]], list[str]]) -> Generator[tuple[int,
             yield x, y, grid[y][x]
 
 
-def ints(s: str) -> list[int]:
+def ints(s: str, greedy: bool = True) -> list[int]:
     """
     Extracts all integers from a given string.
 
@@ -137,4 +137,4 @@ def ints(s: str) -> list[int]:
     Returns:
         List[int]: A list of integers found in the string.
     """
-    return [int(i) for i in re.findall(r"\d+", s)]
+    return [int(i) for i in re.findall(r"\d+" if greedy else r"\d", s)]
