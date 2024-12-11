@@ -1,4 +1,5 @@
 from functools import cache
+import sys
 from typing import TypeAlias
 
 from utils.functools import ints
@@ -7,6 +8,8 @@ from utils.stats import benchmark
 from utils.timing import timeit
 
 InputType: TypeAlias = list[str]
+
+sys.setrecursionlimit(10**4)
 
 
 def solver(stones: list[int], blinks: int):
@@ -19,13 +22,11 @@ def solver(stones: list[int], blinks: int):
             return blink(1, count - 1)
         s = str(num)
         if len(s) % 2 == 0:
-            l = blink(int(s[: len(s) // 2]), count - 1)
-            r = blink(int(s[len(s) // 2 :]), count - 1)
-            return l + r
+            return blink(int(s[: len(s) // 2]), count - 1) + blink(int(s[len(s) // 2 :]), count - 1)
 
         return blink(num * 2024, count - 1)
 
-    return sum([blink(num, 75) for num in stones])
+    return sum([blink(num, blinks) for num in stones])
 
 
 def main(lines: InputType):
@@ -42,12 +43,12 @@ if __name__ == "__main__":
     main(lines)
     benchmark(main, lines)
     """
+    224529
+    Part 1 took 1.47 ms
     266820198587914
-    Part 1 took 54.81 ms
-    266820198587914
-    Part 2 took 51.75 ms
+    Part 2 took 55.19 ms
 
     --- Benchmarks ---
     Number of runs: 100
-    Average per run: 124.53 ms
+    Average per run: 50.67 ms
     """
