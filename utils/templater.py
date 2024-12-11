@@ -34,7 +34,7 @@ def create(
     if day == 0:
         files = listdir(year_path)
         # Find last day
-        days = sorted([file for file in files if "day" in file])
+        days = sorted([file for file in files if "day" in file], key=lambda s: int(s.strip("day.py")))
         if not days:
             day = 1
         else:
@@ -59,10 +59,10 @@ def create(
                 sleep(1)
             print("\nDownloading...")
 
-    day_path = year_path / f"day{day}.py"
+    day_path = year_path / f"day{day:02}.py"
     input_folder_path = year_path / "inputs"
-    input_path = input_folder_path / f"day{day}.txt"
-    input_test_path = input_folder_path / f"day{day}.test.txt"
+    input_path = input_folder_path / f"day{day:02}.txt"
+    input_test_path = input_folder_path / f"day{day:02}.test.txt"
 
     with open(root_path / "utils/template.py") as f:
         template_code = f.read()
