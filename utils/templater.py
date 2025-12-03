@@ -12,6 +12,7 @@ try:
     import typer
 except ImportError:
     print("You need to have `typer` installed")
+    exit()
 
 app = typer.Typer()
 

@@ -17,10 +17,11 @@ def part2(lines: InputType):
 
 def main(lines: InputType):
     with timeit("Part 1"):
-        print(part1(lines))
-
+        p1 = part1(lines)
+    print(p1)
     with timeit("Part 2"):
-        print(part2(lines))
+        p2 = part2(lines)
+    print(p2)
 
 
 if __name__ == "__main__":
