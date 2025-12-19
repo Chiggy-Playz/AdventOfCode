@@ -7,40 +7,71 @@ from utils.timing import timeit
 InputType: TypeAlias = str
 
 
-def part1(lines: InputType):
-    ranges = list(map(lambda s: tuple(map(int, s.split("-"))), lines.split(",")))
-    invalid = 0
-    for start, end in ranges:
-        for num in range(start, end + 1):
-            s = str(num)
-            if len(s) % 2:
+def part1(text: InputType):
+    ranges = [tuple(map(int, pair.split("-"))) for pair in text.split(",")]
+    result = 0
+
+    for left, right in ranges:
+        ls = str(left)
+        rs = str(right)
+
+        ln = len(ls)
+        rn = len(rs)
+
+        # To handle cases like different digit count in ranges, like 88 (2) - 1234 (4)
+        for n in range(ln, rn + 1):
+            if (n % 2 != 0) or (n < 2):
                 continue
+            d = n // 2
+            start = 10 ** (d - 1)
+            end = 10**d
 
-            if s[: len(s) // 2] == s[len(s) // 2 :]:
-                invalid += num
+            for i in range(start, end):
+                num = i * end + i
+                if left <= num <= right:
+                    result += num
 
-    return invalid
+                if right < num:
+                    break
+
+    return result
 
 
-def part2(lines: InputType):
-    ranges = list(map(lambda s: tuple(map(int, s.split("-"))), lines.split(",")))
-    invalid = 0
-    for start, end in ranges:
-        for num in range(start, end + 1):
-            s = str(num)
-            left = 1
-            while left <= len(s) // 2:
-                for i in range(2, (len(s) // left) + 1):
-                    if s[:left] != s[(i - 1) * left : i * left]:
+def part2(text: InputType):
+    ranges = [tuple(map(int, pair.split("-"))) for pair in text.split(",")]
+    result = 0
+    seen = set()
+    for left, right in ranges:
+        ls = str(left)
+        rs = str(right)
+
+        ln = len(ls)
+        rn = len(rs)
+
+        for n in range(ln, rn + 1):
+            # factorization:
+            for factor in range(1, n):
+                if n % factor != 0:
+                    # not factor
+                    continue
+
+                k = n // factor
+                start = 10 ** (factor - 1)
+                end = 10**factor
+
+                for i in range(start, end):
+                    num = i
+                    for _ in range(k - 1):
+                        num *= 10**factor
+                        num += i
+
+                    if left <= num <= right and num not in seen:
+                        seen.add(num)
+                        result += num
+
+                    if right < num:
                         break
-                else:
-                    if not len(s) % left:
-                        invalid += num
-                        left += 1
-                        break
-                left += 1
-
-    return invalid
+    return result
 
 
 def main(lines: InputType):
