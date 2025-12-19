@@ -86,3 +86,13 @@ if __name__ == "__main__":
     lines = get_input(testing=False, lines=False)
     main(lines)
     benchmark(main, lines)
+    """
+    18700015741
+    Part 1 took 9.74 ms
+    20077272987
+    Part 2 took 24.38 ms
+
+    --- Benchmarks ---
+    Number of runs: 100
+    Average per run: 32.99 ms
+    """
