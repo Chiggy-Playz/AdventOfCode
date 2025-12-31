@@ -19,4 +19,4 @@ def get_input(full_path: Optional[str] = None, lines=True, testing=False):
             basename(full_path).split(".")[0] + (".test" if testing else "") + ".txt",
         )
     ) as f:
-        return [line.strip() for line in f.readlines()] if lines else f.read()
+        return [line.strip("\n") for line in f.readlines()] if lines else f.read()
